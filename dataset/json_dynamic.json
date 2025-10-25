@@ -2,7 +2,7 @@
 	"name": "json_dynamic",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "DataLake_ls",
+			"referenceName": "azuredatalake_ls",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -26,7 +26,7 @@
 					"type": "Expression"
 				},
 				"folderPath": {
-					"value": "@dataset().file",
+					"value": "@dataset().folder",
 					"type": "Expression"
 				},
 				"fileSystem": {
