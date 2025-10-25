@@ -1,0 +1,9 @@
+{
+	"name": "azurespotifydf",
+	"location": "northeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "18983b15-2cc7-4aad-981a-f0d6d5497f86",
+		"tenantId": "26d241f1-b8fa-40da-8eae-f223184f56e2"
+	}
+}
