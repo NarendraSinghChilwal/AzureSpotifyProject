@@ -1,5 +1,5 @@
 {
-	"name": "azureSql",
+	"name": "azuresql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "azuresql_ls",

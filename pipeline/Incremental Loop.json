@@ -70,7 +70,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "azureSql",
+									"referenceName": "azuresql",
 									"type": "DatasetReference"
 								}
 							],
