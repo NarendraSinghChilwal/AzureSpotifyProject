@@ -322,16 +322,12 @@
 			{
 				"name": "Alerts",
 				"type": "WebActivity",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEachTable",
 						"dependencyConditions": [
-							"Skipped",
 							"Failed",
-							"Succeeded",
-							"Completed"
+							"Succeeded"
 						]
 					}
 				],
