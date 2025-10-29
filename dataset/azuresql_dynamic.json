@@ -2,7 +2,7 @@
 	"name": "azuresql_dynamic",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "azuresql_ls",
+			"referenceName": "AzureSql_ls",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
