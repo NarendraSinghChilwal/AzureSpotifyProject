@@ -1,5 +1,5 @@
 {
-	"name": "AzureSql_ls",
+	"name": "azuresql_ls",
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
