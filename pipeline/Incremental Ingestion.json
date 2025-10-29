@@ -58,7 +58,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "azuresql",
+						"referenceName": "azuresql_dynamic",
 						"type": "DatasetReference"
 					}
 				],
@@ -276,7 +276,7 @@
 							},
 							"userProperties": [],
 							"linkedServiceName": {
-								"referenceName": "azuresql_ls",
+								"referenceName": "AzureSql_ls",
 								"type": "LinkedServiceReference"
 							},
 							"typeProperties": {

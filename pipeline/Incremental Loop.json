@@ -70,7 +70,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "azuresql",
+									"referenceName": "azuresql_dynamic",
 									"type": "DatasetReference"
 								}
 							],
@@ -276,7 +276,7 @@
 												"parameters": {
 													"container": "bronze",
 													"folder": {
-														"value": "@{item().table}last_cdc",
+														"value": "@{item().table}_cdc",
 														"type": "Expression"
 													},
 													"file": "cdc.json"
@@ -297,7 +297,7 @@
 										},
 										"userProperties": [],
 										"linkedServiceName": {
-											"referenceName": "azuresql_ls",
+											"referenceName": "AzureSql_ls",
 											"type": "LinkedServiceReference"
 										},
 										"typeProperties": {

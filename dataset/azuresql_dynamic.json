@@ -1,5 +1,5 @@
 {
-	"name": "azuresql",
+	"name": "azuresql_dynamic",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureSql_ls",
