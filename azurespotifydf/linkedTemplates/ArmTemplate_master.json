@@ -1,0 +1,84 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "azurespotifydf"
+		},
+		"AzureSql_ls_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSql_ls'"
+		},
+		"azuredatalake_ls_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'azuredatalake_ls'"
+		},
+		"AzureSql_ls_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "azureprojectnaren.database.windows.net"
+		},
+		"AzureSql_ls_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "azureprojectdbnaren"
+		},
+		"AzureSql_ls_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "adminnaren"
+		},
+		"azuredatalake_ls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://narenspotifystorage.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "azurespotifydf_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureSql_ls_password": {
+						"value": "[parameters('AzureSql_ls_password')]"
+					},
+					"azuredatalake_ls_accountKey": {
+						"value": "[parameters('azuredatalake_ls_accountKey')]"
+					},
+					"AzureSql_ls_properties_typeProperties_server": {
+						"value": "[parameters('AzureSql_ls_properties_typeProperties_server')]"
+					},
+					"AzureSql_ls_properties_typeProperties_database": {
+						"value": "[parameters('AzureSql_ls_properties_typeProperties_database')]"
+					},
+					"AzureSql_ls_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSql_ls_properties_typeProperties_userName')]"
+					},
+					"azuredatalake_ls_properties_typeProperties_url": {
+						"value": "[parameters('azuredatalake_ls_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

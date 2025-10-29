@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "azurespotifydf"
+		},
+		"AzureSql_ls_password": {
+			"value": ""
+		},
+		"azuredatalake_ls_accountKey": {
+			"value": ""
+		},
+		"AzureSql_ls_properties_typeProperties_server": {
+			"value": "azureprojectnaren.database.windows.net"
+		},
+		"AzureSql_ls_properties_typeProperties_database": {
+			"value": "azureprojectdbnaren"
+		},
+		"AzureSql_ls_properties_typeProperties_userName": {
+			"value": "adminnaren"
+		},
+		"azuredatalake_ls_properties_typeProperties_url": {
+			"value": "https://narenspotifystorage.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
