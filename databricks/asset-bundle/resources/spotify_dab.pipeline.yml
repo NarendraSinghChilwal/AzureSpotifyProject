@@ -1,0 +1,14 @@
+# The main pipeline for spotify_dab
+resources:
+  pipelines:
+    spotify_dab_pipeline:
+      name: spotify_dab_pipeline
+      catalog: databricksazureproject
+      schema: spotify_dab_${bundle.target}
+      serverless: true
+      libraries:
+        - notebook:
+            path: ../src/pipeline.ipynb
+
+      configuration:
+        bundle.sourcePath: ${workspace.file_path}/src
