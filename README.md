@@ -18,7 +18,7 @@ Key highlights:
 > Replace this placeholder with the uploaded architecture image
 
 ```markdown
-![Azure Medallion Architecture](./architecture/azure_medallion_architecture.png)
+![Azure Medallion Architecture](./Architecture/azure_medallion_architecture.png)
 
 project-root/
 ├─ architecture/
