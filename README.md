@@ -1,4 +1,4 @@
-# Azure Spotify Data Engineering — Medallion Architecture (Bronze → Silver → Gold)
+# Cloud-Scale Data Engineering project using Azure SQL, ADF CDC, Databricks Auto Loader, Delta Live Tables (SCD-2), and Unity Catalog — deployed to Dev & Prod with Databricks Asset Bundles.
 
 End-to-end data engineering pipeline inspired by Spotify data flows, built on **Azure + Databricks** using the **Medallion Architecture**.
 
