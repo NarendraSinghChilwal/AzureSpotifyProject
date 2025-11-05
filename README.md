@@ -78,7 +78,7 @@ azure-data-factory/
 
 ### ADF Pipeline Screenshot
 ```
-![ADF CDC Pipeline](./images/adf_cdc_pipeline.png)
+![ADF CDC Pipeline](./Architecture/ADF UI.jpeg)
 ```
 
 ### ADF Run Output
