@@ -60,6 +60,12 @@ Office365 Connection | ADF + Logic App notifications
 
 ## Azure Data Factory — Incremental Pipeline (CDC)
 
+### ADF Pipeline Screenshot
+```
+![ADF CDC Pipeline](./Architecture/ADFUI.jpeg)
+```
+
+
 ### Pipeline Responsibilities
 - Connect to **Azure SQL Source**
 - Capture inserts/updates via **CDC**
@@ -74,16 +80,6 @@ azure-data-factory/
 │  └─ cdc_pipeline.json
 ├─ datasets/
 ├─ linked-services/
-```
-
-### ADF Pipeline Screenshot
-```
-![ADF CDC Pipeline](./Architecture/ADF UI.jpeg)
-```
-
-### ADF Run Output
-```
-![ADF Run Output](./images/adf_run_output.png)
 ```
 
 ---
@@ -119,7 +115,7 @@ adls/
 
 ### Bronze Layer Screenshot
 ```
-![Bronze Storage](./images/bronze_layer.png)
+![Bronze Storage](./Architecture/ADLScontainers.jpeg)
 ```
 
 ---
@@ -195,7 +191,7 @@ df_clean.writeStream \
 
 ### Auto Loader Config Screenshot
 ```
-![Silver AutoLoader](./images/silver_autoloader.png)
+![Silver AutoLoader](./Architecture/AutoloaderDB.jpeg)
 ```
 
 ### Silver Tables Screenshot
@@ -243,13 +239,13 @@ DLT Pipeline → Jinja SQL → Delta Tables (Gold Zone) → Dev & Prod via Asset
 `![DLT Pipeline](./images/dlt_pipeline.png)`
 
 ### 📸 Jinja templating inside DLT notebook  
-`![Jinja Gold Notebook](./images/jinja_gold_notebook.png)`
+`![Jinja Gold Notebook](./Architecture/Jinjatemplate.jpeg)`
 
 ### 📸 Auto-CDC + SCD2 lineage in UI  
-`![DLT SCD2 View](./images/dlt_scd2_view.png)`
+`![DLT SCD2 View](./Architecture/Golddimensionalmodelling.jpeg)`
 
 ### 📸 Databricks Job Triggering Gold Pipeline  
-`![DLT Job Run](./images/databricks_job_gold.png)`
+`![DLT Job Run](./Architecture/Goldpipeline.jpeg)`
 
 ### 📸 Asset Bundle Deployment — Dev & Prod  
 `![Asset Bundle Deploy](./images/asset_bundle_deploy.png)`
