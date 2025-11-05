@@ -54,7 +54,7 @@ Logic App | Alerts & automation
 Office365 Connection | ADF + Logic App notifications  
 
 ### Resource Group Screenshot
-![Azure Resource Group](./Architecture/AzureResourceGroup.png)
+![Azure Resource Group](./Architecture/AzureResourceGroup.jpeg)
 
 
 
