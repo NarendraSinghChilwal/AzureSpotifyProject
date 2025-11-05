@@ -86,8 +86,6 @@ GitHub scripts → Azure SQL (Source DB) → ADF CDC → ADLS **Bronze**
 - Triggered via **Databricks Auto Loader**
 - Applied in next section
 
-> Next section: `Silver Layer — Cleaned & Refined Data`
-
 ## 🧠 Databricks Medallion — Silver & Gold
 
 ### Silver Layer (Auto Loader + PySpark)
@@ -103,6 +101,16 @@ Clean + standardize streaming data from Bronze
 
 ### 📸 Auto Loader UI 
 ![Auto Loader](./Architecture/AutoloaderDB.jpeg)
+
+### 🧰 Reusable Utilities for Transformation Logic
+
+During Silver layer processing, reusable utility functions were leveraged to enforce clean, modular transformations across notebooks. These utilities were imported into Databricks notebooks to standardize cleansing, deduplication, and metadata handling during Silver ETL.
+
+#### Utility Import
+![Utility Import](./Architecture/utilitiesimport.jpeg)
+
+#### Utility Usage
+![Utility Usage](./Architecture/Utilityusage.jpeg)
 
 ---
 
