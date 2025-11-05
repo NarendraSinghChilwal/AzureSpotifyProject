@@ -57,68 +57,28 @@ Office365 Connection | ADF + Logic App notifications
 ![Azure Resource Group](./Architecture/AzureResourceGroup.jpeg)
 
 
-
-## Azure Data Factory — Incremental Pipeline (CDC)
-
-### ADF Pipeline Screenshot
-```
-![ADF CDC Pipeline](./Architecture/ADFUI.jpeg)
-```
-
-
-### Pipeline Responsibilities
-- Connect to **Azure SQL Source**
-- Capture inserts/updates via **CDC**
-- Land raw Parquet files into **ADLS Bronze container**
-- Track watermark column for incremental loads
-
-### Artifacts
-
-```text
-azure-data-factory/
-├─ pipelines/
-│  └─ cdc_pipeline.json
-├─ datasets/
-├─ linked-services/
-```
-
 ---
 
-## Bronze Layer — Raw Data Zone (ADLS Gen2)
+## 🔄 Source → Azure SQL → Bronze (Azure Data Factory - CDC)
 
-### Purpose
-Store raw immutable data exactly as received from source systems.
+### 📌 End-to-End Flow
+GitHub scripts → Azure SQL (Source DB) → ADF CDC → ADLS **Bronze**
 
-### Characteristics
-| Property | Details |
-|---|---|
-Storage | ADLS Gen2 `/bronze/`
-Format | Parquet (raw files)
-Ingestion Tool | **Azure Data Factory (CDC)**
-Transformation | None (schema-on-read)
-Usage | Replay, lineage, auditing, time-travel
+### 📸 Pipeline UI  
+![ADF Pipeline](./Architecture/ADFUI.jpeg)
 
 ### Responsibilities
-- Preserve **raw source fidelity**
-- Maintain **auditability and traceability**
-- Serve as input to **Databricks Auto Loader** in next stage (Silver)
+- Run SQL scripts from GitHub to load source tables
+- Detect incremental changes via **SQL CDC**
+- Land raw parquet data into **ADLS Bronze**
+- Maintain **watermark + last CDC time**
+- Trigger downstream pipelines (Silver)
 
-### Folder Structure
+### Output (Bronze Zone)
+- Raw data (no transformations)
+- Immutable append-only storage
+- Audit, replay, recovery possible
 
-```
-adls/
-└─ bronze/
-   ├─ tableA/
-   ├─ tableB/
-   └─ metadata/
-```
-
-### Bronze Layer Screenshot
-```
-![Bronze Storage](./Architecture/ADLScontainers.jpeg)
-```
-
----
 
 ## Transition — Bronze → Silver
 
@@ -128,130 +88,45 @@ adls/
 
 > Next section: `Silver Layer — Cleaned & Refined Data`
 
-## Silver Layer — Cleaned & Refined Data (Databricks)
+## 🧠 Databricks Medallion — Silver & Gold
 
-### Purpose
-Transform raw Bronze data into clean, structured, and validated Delta tables.
+### Silver Layer (Auto Loader + PySpark)
 
-### Characteristics
-| Property | Details |
-|---|---|
-Storage | ADLS Gen2 `/silver/`
-Format | Delta Lake
-Engine | **Databricks Auto Loader + PySpark**
-Schema | Cleaned, validated, conformed schema
-Usage | Analytics-ready base tables for Gold layer
+#### Purpose
+Clean + standardize streaming data from Bronze
 
-### Responsibilities
-- Read raw data from **Bronze**
-- Apply **schema enforcement**
-- Handle **missing / bad records**
-- Normalize and cast datatypes
-- Deduplicate using watermark logic
-- Write optimized **Delta tables**
+#### Actions
+- Auto Loader reads raw parquet
+- Schema enforcement + dedupe
+- Data type casting & null handling
+- Save to **Delta tables in Silver**
 
-### Processing Flow
-
-```
-Bronze (Raw Parquet/Delta)
-     ↓ Auto Loader (streaming/batch)
-PySpark cleansing + transformations
-     ↓
-Silver Delta Tables
-```
-
-### Folder Structure
-
-```
-adls/
-└─ silver/
-   ├─ cleaned_tableA/
-   ├─ cleaned_tableB/
-   └─ checkpoints/
-```
-
-### Notebook / Code Sample
-
-```python
-df = (spark.readStream.format("cloudFiles")
-      .option("cloudFiles.format", "parquet")
-      .load("/mnt/bronze/tableA"))
-
-df_clean = (df
-    .dropDuplicates(["id"])
-    .filter("id IS NOT NULL")
-    .withColumn("event_ts", col("event_ts").cast("timestamp"))
-)
-
-df_clean.writeStream \
-    .format("delta") \
-    .option("checkpointLocation", "/mnt/silver/checkpoints/tableA") \
-    .start("/mnt/silver/cleaned_tableA")
-```
-
-### Auto Loader Config Screenshot
-```
-![Silver AutoLoader](./Architecture/AutoloaderDB.jpeg)
-```
-
-### Silver Tables Screenshot
-```
-![Silver Delta Tables](./images/silver_tables.png)
-```
+### 📸 Auto Loader UI 
+![Auto Loader](./Architecture/AutoloaderDB.jpeg)
 
 ---
 
-## Transition — Silver → Gold
+### Gold Layer (DLT + Jinja + SCD-2)
 
-- Silver tables feed **Delta Live Tables (DLT)** pipelines
-- Business rules & aggregations applied next
+#### Purpose
+Business-ready tables with CDC intelligence
 
-> Next section: `Gold Layer — Business & Analytics Layer (Delta Live Tables)`
+#### Key Capabilities
+- Delta Live Tables (Streaming)
+- SCD-2 on dimensions
+- Fact incremental merge
+- Jinja SQL automation
+- Validations + lineage
 
+### 📸 Jinja Template  
+![Jinja Template](./Architecture/Jinjatemplate.jpeg)
 
-## 🟡 Gold Layer — Delta Live Tables + Jinja SQL Automation
+### 📸 Gold Star Schema  
+![DLT SCD2 View](./Architecture/Golddimensionalmodelling.jpeg)
 
-The Gold layer uses **Delta Live Tables (DLT)** to build business-ready dimension and fact tables, with:
+### 📸 Gold DLT Pipeline  
+![DLT Pipeline](./Architecture/Goldpipeline.jpeg)
 
-- **SCD Type-2** for dimensions using Databricks Auto-CDC
-- **Upserts** for fact tables (Type-1)
-- **Jinja templating** inside the DLT notebook to dynamically generate SQL
-- **Databricks Asset Bundles** for Dev → Prod deployment
-
-### Key Capabilities
-
-| Feature | Implementation |
-|---|---|
-SCD Type-2 Dimensions | DLT `@dlt.create_streaming_table` + Auto-CDC  
-Fact Upserts | DLT + merge logic  
-SQL Generator | Jinja templated SQL strings  
-Processing | Spark structured streaming  
-Deployment | Databricks Asset Bundles → Dev & Prod  
-Scheduler | Databricks Jobs pipeline  
-
-### Architecture Flow (Gold)
-
-```
-DLT Pipeline → Jinja SQL → Delta Tables (Gold Zone) → Dev & Prod via Asset Bundle
-```
-
-### 📸 DLT Pipeline Screenshot  
-`![DLT Pipeline](./images/dlt_pipeline.png)`
-
-### 📸 Jinja templating inside DLT notebook  
-`![Jinja Gold Notebook](./Architecture/Jinjatemplate.jpeg)`
-
-### 📸 Auto-CDC + SCD2 lineage in UI  
-`![DLT SCD2 View](./Architecture/Golddimensionalmodelling.jpeg)`
-
-### 📸 Databricks Job Triggering Gold Pipeline  
-`![DLT Job Run](./Architecture/Goldpipeline.jpeg)`
-
-### 📸 Asset Bundle Deployment — Dev & Prod  
-`![Asset Bundle Deploy](./images/asset_bundle_deploy.png)`
-
-### Output Tables Example  
-`![Gold Tables](./images/gold_tables_catalog.png)`
 
 ---
 
