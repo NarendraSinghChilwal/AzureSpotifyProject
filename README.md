@@ -13,23 +13,29 @@ Key highlights:
 
 ---
 
-## 📐 Architecture Diagram
+## 🏗️ Architecture Diagram
 
-![Azure Medallion Architecture](Architecture/azure_medallion_architecture.png)
+![Azure Medallion Architecture](./Architecture/azure_medallion_architecture.png)
 
+```text
 project-root/
-├─ architecture/
+├─ Architecture/
 │  └─ azure_medallion_architecture.png
 ├─ azure-data-factory/
 │  ├─ pipelines/
 │  │  └─ cdc_pipeline.json
 │  ├─ datasets/
-│  ├─ linked-services/
+│  └─ linked-services/
 ├─ databricks/
 │  ├─ asset-bundle/
-│  ├─ src/
-│  └─ utils/
+│  └─ src/
+│     ├─ silver/
+│     ├─ gold/
+│     │  └─ dlt/
+│     └─ jinja/
+├─ utils/
 └─ README.md
+```
 
 
 
@@ -43,7 +49,7 @@ project-root/
 
 ### Artifacts
 
-```
+```text
 azure-data-factory/
 ├─ pipelines/
 │  └─ cdc_pipeline.json
