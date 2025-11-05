@@ -36,6 +36,25 @@ project-root/
 ├─ utils/
 └─ README.md
 ```
+## ☁️ Azure Resource Group & Provisioned Services
+
+All cloud resources for this project are deployed inside a dedicated Azure Resource Group.
+
+### Resource Group: `RG-AzureSpotify`
+
+| Service | Purpose |
+|---|---|
+Azure SQL Database | Source transactional database  
+Azure SQL Server | SQL hosting for source DB  
+Azure Data Factory (V2) | CDC pipeline → Bronze  
+Azure Databricks Workspace | Medallion ETL + DLT  
+Azure Storage Account (ADLS Gen2) | Bronze / Silver / Gold zones  
+Access Connector for Databricks | Secure access to ADLS  
+Logic App | Alerts & automation  
+Office365 Connection | ADF + Logic App notifications  
+
+### Resource Group Screenshot
+![Azure Resource Group](./Architecture/AzureResourceGroup.png)
 
 
 
