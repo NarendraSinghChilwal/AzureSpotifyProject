@@ -1,4 +1,4 @@
-# Cloud-Scale Data Engineering project using Azure SQL, ADF CDC, Databricks Auto Loader, Delta Live Tables (SCD-2), and Unity Catalog — deployed to Dev & Prod with Databricks Asset Bundles.
+# Production-Grade Medallion Pipeline on Azure & Databricks (CDC, Auto Loader, DLT, CI/CD)
 
 End-to-end data engineering pipeline inspired by Spotify data flows, built on **Azure + Databricks** using the **Medallion Architecture**.
 
