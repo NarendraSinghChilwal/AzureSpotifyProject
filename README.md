@@ -140,31 +140,10 @@ Business-ready tables with CDC intelligence
 
 ## 🚀 CI/CD — Databricks Asset Bundles
 
-![Deployment](./Architecture/assetbundle.jpeg)
+![Deployment](./Architecture/image.png)
 
 This project uses **Databricks Asset Bundles** to validate and plan deployments for Dev & Prod environments.
 
-
-### Commands Executed
-```bash
-databricks bundle validate
-databricks bundle plan --target dev
-databricks bundle plan --target prod
-
-
-### Summary
-
-| Layer | Engine | Logic |
-|---|---|---|
-Bronze | ADF | CDC → ADLS |
-Silver | Databricks | Auto Loader + PySpark |
-**Gold** | **Databricks DLT** | **Auto-CDC + SCD2 + Jinja SQL** |
-Deployment | Databricks Asset Bundles | Dev & Prod |
-
-✔ Production-grade DLT pipeline  
-✔ Real SCD-2 + incremental facts  
-✔ SQL automation via Jinja  
-✔ CI/CD with Databricks Bundle  
 
 ---
 
